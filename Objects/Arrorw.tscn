@@ -1,0 +1,6 @@
+[gd_scene format=2]
+
+[node name="Arrorw" type="Line2D"]
+points = PoolVector2Array( -10, -25, 0, -32, 10, -25 )
+width = 4.0
+default_color = Color( 1, 1, 1, 1 )

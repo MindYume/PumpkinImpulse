@@ -1,0 +1,5 @@
+Fonts
+
+"Open Sans" font by Steve Matteson
+Copyright (c) 2020
+Licensed under the SIL Open Font License, Version 1.1.

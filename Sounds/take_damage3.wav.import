@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/take_damage3.wav-42b0eb05bc45fd2b9f5eb9b5c76194aa.sample"
+
+[deps]
+
+source_file="res://Sounds/take_damage3.wav"
+dest_files=[ "res://.import/take_damage3.wav-42b0eb05bc45fd2b9f5eb9b5c76194aa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

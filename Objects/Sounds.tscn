@@ -1,0 +1,74 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Sounds/btn_click.wav" type="AudioStream" id=1]
+[ext_resource path="res://Sounds/btn_hover.wav" type="AudioStream" id=3]
+[ext_resource path="res://Sounds/wave.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/wave_end.wav" type="AudioStream" id=5]
+
+[sub_resource type="CSharpScript" id=2]
+script/source = "using Godot;
+
+public class Sounds : Node
+{
+    public AudioStreamPlayer btn_click;
+    public AudioStreamPlayer btn_hover;
+    public AudioStreamPlayer wave_end;
+    public AudioStreamPlayer hit;
+    public AudioStreamPlayer[] wave;
+
+    public override void _Ready()
+    {
+        btn_click = GetNode<AudioStreamPlayer>(\"btn_click\");
+        btn_hover = GetNode<AudioStreamPlayer>(\"btn_hover\");
+        wave_end = GetNode<AudioStreamPlayer>(\"wave_end\");
+        hit = GetNode<AudioStreamPlayer>(\"hit\");
+
+        wave = new AudioStreamPlayer[3];
+        wave[0] = GetNode<AudioStreamPlayer>(\"wave0\");
+        wave[1] = GetNode<AudioStreamPlayer>(\"wave1\");
+        wave[2] = GetNode<AudioStreamPlayer>(\"wave2\");
+    }
+
+    public void PlaySound(string soundName)
+    {
+        AudioStreamSample audioStreamSample = new AudioStreamSample();
+        //audioStreamSample.ResourceLocalToScene = true;
+        audioStreamSample.ResourcePath = $\"res://Sounds/hit.wav\";
+        //AudioStreamPlayer soundPlayer = new AudioStreamPlayer();
+        //AddChild(soundPlayer);
+        //soundPlayer.Stream = audioStreamSample;
+        //soundPlayer.Connect(\"finished\", soundPlayer, nameof(QueueFree));
+        //soundPlayer.Play();
+    }
+
+}
+"
+
+[sub_resource type="AudioStreamSample" id=1]
+format = 1
+stereo = true
+
+[node name="Sounds" type="Node"]
+pause_mode = 2
+script = SubResource( 2 )
+
+[node name="btn_click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+
+[node name="btn_hover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="wave0" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="wave1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="wave2" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 1 )
+
+[node name="hit" type="AudioStreamPlayer" parent="."]
+pitch_scale = 2.0
+
+[node name="wave_end" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
