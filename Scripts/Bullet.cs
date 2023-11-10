@@ -77,13 +77,25 @@ public class Bullet : RigidBody2D
 		if (body is IEnemy)
 		{
 			((IEnemy)body).TakeDamage(_power * 100);
-			_generalSingleton.PlaySound("hit", (-50 + _power * 50), 1);
+			_generalSingleton.PlaySound("hit", (-40 + _power * 40), 2);
+			HitEffect.Create(
+				(Node2D)GetParent().GetParent(),
+				(GlobalPosition + ((Node2D)body).GlobalPosition)/2,
+				Vector2.One * _power * 2,
+				_trail.DefaultColor
+			);
 			QueueFree();
 		}
 		else if (body is Player)
 		{
 			((Player)body).TakeDamage();
-			_generalSingleton.PlaySound("hit", (-50 + _power * 50), 1);
+			_generalSingleton.PlaySound("hit", (-40 + _power * 40), 2);
+			HitEffect.Create(
+				(Node2D)GetParent().GetParent(),
+				(GlobalPosition + ((Node2D)body).GlobalPosition)/2,
+				Vector2.One * _power * 2,
+				_trail.DefaultColor
+			);
 			QueueFree();
 		}
 	}
