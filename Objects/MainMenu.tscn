@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/MainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://images/CloseButton.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/CreditsPanel.cs" type="Script" id=4]
 [ext_resource path="res://StyleBoxes/button.tres" type="StyleBox" id=5]
 [ext_resource path="res://StyleBoxes/button_hover.tres" type="StyleBox" id=6]
 [ext_resource path="res://StyleBoxes/button_pressed.tres" type="StyleBox" id=7]
@@ -13,9 +14,11 @@
 [ext_resource path="res://Objects/ButtonSounds.tscn" type="PackedScene" id=12]
 
 [sub_resource type="DynamicFont" id=2]
-size = 28
+size = 20
 outline_size = 3
 outline_color = Color( 0.231373, 0.0627451, 0, 1 )
+extra_spacing_top = -4
+extra_spacing_bottom = -4
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -34,6 +37,11 @@ font_data = ExtResource( 2 )
 size = 48
 outline_size = 5
 use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=8]
+outline_size = 2
+outline_color = Color( 0.231373, 0.0627451, 0, 1 )
 font_data = ExtResource( 2 )
 
 [node name="MainMenu" type="Panel"]
@@ -56,8 +64,7 @@ __meta__ = {
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
 margin_right = 160.0
-margin_bottom = 77.0
-size_flags_vertical = 3
+margin_bottom = 52.0
 custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
@@ -73,11 +80,29 @@ __meta__ = {
 
 [node name="ButtonSounds" parent="VBoxContainer/PlayButton" instance=ExtResource( 12 )]
 
-[node name="LanguageButton" type="Button" parent="VBoxContainer"]
-margin_top = 81.0
+[node name="CreditsButton" type="Button" parent="VBoxContainer"]
+margin_top = 56.0
 margin_right = 160.0
-margin_bottom = 158.0
-size_flags_vertical = 3
+margin_bottom = 108.0
+custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
+custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
+custom_fonts/font = SubResource( 2 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 5 )
+text = "Credits"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ButtonSounds" parent="VBoxContainer/CreditsButton" instance=ExtResource( 12 )]
+
+[node name="LanguageButton" type="Button" parent="VBoxContainer"]
+margin_top = 112.0
+margin_right = 160.0
+margin_bottom = 164.0
 custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
@@ -95,9 +120,9 @@ __meta__ = {
 
 [node name="ExitButton" type="Button" parent="VBoxContainer"]
 visible = false
-margin_top = 150.0
+margin_top = 174.0
 margin_right = 160.0
-margin_bottom = 227.0
+margin_bottom = 251.0
 size_flags_vertical = 3
 custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
@@ -183,7 +208,7 @@ margin_right = 62.0
 margin_bottom = 73.0
 
 [node name="English" type="Button" parent="LanguagePanel/VBoxContainer"]
-margin_right = 139.0
+margin_right = 124.0
 margin_bottom = 71.0
 size_flags_vertical = 3
 custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
@@ -217,7 +242,7 @@ enabled_focus_mode = 0
 
 [node name="Russian" type="Button" parent="LanguagePanel/VBoxContainer"]
 margin_top = 75.0
-margin_right = 139.0
+margin_right = 124.0
 margin_bottom = 146.0
 size_flags_vertical = 3
 custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
@@ -262,9 +287,61 @@ stretch_mode = 4
 
 [node name="ButtonSounds" parent="LanguagePanel/CloseButton" instance=ExtResource( 12 )]
 
+[node name="CreditsPanel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -171.0
+margin_top = -167.0
+margin_right = 171.0
+margin_bottom = 167.0
+custom_styles/panel = ExtResource( 8 )
+script = ExtResource( 4 )
+
+[node name="CloseButton" type="TextureButton" parent="CreditsPanel"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -54.0
+margin_top = 16.0
+margin_right = -17.0
+margin_bottom = 54.0
+texture_normal = ExtResource( 3 )
+texture_hover = ExtResource( 10 )
+expand = true
+stretch_mode = 4
+
+[node name="ButtonSounds" parent="CreditsPanel/CloseButton" instance=ExtResource( 12 )]
+
+[node name="ColorRect" type="ColorRect" parent="CreditsPanel"]
+margin_left = 16.0
+margin_top = 59.0
+margin_right = 326.0
+margin_bottom = 318.0
+color = Color( 0.0196078, 0.231373, 0, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CreditsPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 63.0
+margin_right = -20.0
+margin_bottom = -20.0
+custom_colors/default_color = Color( 1, 0.4, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.905882, 0.360784, 0, 1 )
+custom_fonts/normal_font = SubResource( 8 )
+text = "Fonts
+
+\"Open Sans\" font by Steve Matteson
+Copyright (c) 2020
+Licensed under the SIL Open Font License, Version 1.1.
+"
+
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/CreditsButton" to="CreditsPanel" method="_on_CreditsButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/LanguageButton" to="LanguagePanel" method="_on_LanguageButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
 [connection signal="pressed" from="LanguagePanel/VBoxContainer/English" to="LanguagePanel" method="_on_English_pressed"]
 [connection signal="pressed" from="LanguagePanel/VBoxContainer/Russian" to="LanguagePanel" method="_on_Russian_pressed"]
 [connection signal="pressed" from="LanguagePanel/CloseButton" to="LanguagePanel" method="_on_CloseButton_pressed"]
+[connection signal="pressed" from="CreditsPanel/CloseButton" to="CreditsPanel" method="_on_CloseButton_pressed"]
