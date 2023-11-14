@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/MainMenu.cs" type="Script" id=1]
 [ext_resource path="res://Fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf" type="DynamicFontData" id=2]
@@ -12,14 +12,8 @@
 [ext_resource path="res://images/CloseButton_hover.png" type="Texture" id=10]
 [ext_resource path="res://Scripts/LanguagePanel.cs" type="Script" id=11]
 [ext_resource path="res://Objects/ButtonSounds.tscn" type="PackedScene" id=12]
-
-[sub_resource type="DynamicFont" id=2]
-size = 20
-outline_size = 3
-outline_color = Color( 0.231373, 0.0627451, 0, 1 )
-extra_spacing_top = -4
-extra_spacing_bottom = -4
-font_data = ExtResource( 2 )
+[ext_resource path="res://Fonts/OpenSans.tres" type="DynamicFont" id=13]
+[ext_resource path="res://Fonts/NotoSans.tres" type="DynamicFont" id=14]
 
 [sub_resource type="DynamicFont" id=4]
 size = 32
@@ -69,7 +63,7 @@ custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 13 )
 custom_styles/hover = ExtResource( 6 )
 custom_styles/pressed = ExtResource( 7 )
 custom_styles/normal = ExtResource( 5 )
@@ -88,7 +82,7 @@ custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 13 )
 custom_styles/hover = ExtResource( 6 )
 custom_styles/pressed = ExtResource( 7 )
 custom_styles/normal = ExtResource( 5 )
@@ -107,7 +101,7 @@ custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 13 )
 custom_styles/hover = ExtResource( 6 )
 custom_styles/pressed = ExtResource( 7 )
 custom_styles/normal = ExtResource( 5 )
@@ -203,19 +197,19 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -62.0
-margin_top = -73.0
+margin_top = -110.0
 margin_right = 62.0
-margin_bottom = 73.0
+margin_bottom = 110.0
 
 [node name="English" type="Button" parent="LanguagePanel/VBoxContainer"]
 margin_right = 124.0
-margin_bottom = 71.0
+margin_bottom = 52.0
 size_flags_vertical = 3
 custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 13 )
 custom_styles/hover = ExtResource( 6 )
 custom_styles/pressed = ExtResource( 7 )
 custom_styles/normal = ExtResource( 5 )
@@ -240,16 +234,50 @@ pressed = true
 button_mask = 0
 enabled_focus_mode = 0
 
-[node name="Russian" type="Button" parent="LanguagePanel/VBoxContainer"]
-margin_top = 75.0
+[node name="Japanese" type="Button" parent="LanguagePanel/VBoxContainer"]
+margin_top = 56.0
 margin_right = 124.0
-margin_bottom = 146.0
+margin_bottom = 110.0
+rect_pivot_offset = Vector2( 778, 451 )
 size_flags_vertical = 3
 custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
 custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
 custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = ExtResource( 14 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 5 )
+text = "日本語"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ButtonSounds" parent="LanguagePanel/VBoxContainer/Japanese" instance=ExtResource( 12 )]
+
+[node name="CheckBox" type="CheckBox" parent="LanguagePanel/VBoxContainer/Japanese"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -47.0
+margin_top = -38.5
+margin_right = -183.0
+margin_bottom = 0.5
+rect_scale = Vector2( 2, 2 )
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
+
+[node name="Russian" type="Button" parent="LanguagePanel/VBoxContainer"]
+margin_top = 114.0
+margin_right = 124.0
+margin_bottom = 166.0
+size_flags_vertical = 3
+custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
+custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
+custom_fonts/font = ExtResource( 13 )
 custom_styles/hover = ExtResource( 6 )
 custom_styles/pressed = ExtResource( 7 )
 custom_styles/normal = ExtResource( 5 )
@@ -261,6 +289,39 @@ __meta__ = {
 [node name="ButtonSounds" parent="LanguagePanel/VBoxContainer/Russian" instance=ExtResource( 12 )]
 
 [node name="CheckBox" type="CheckBox" parent="LanguagePanel/VBoxContainer/Russian"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -47.0
+margin_top = -38.5
+margin_right = -183.0
+margin_bottom = 0.5
+rect_scale = Vector2( 2, 2 )
+focus_mode = 0
+button_mask = 0
+enabled_focus_mode = 0
+
+[node name="Turkish" type="Button" parent="LanguagePanel/VBoxContainer"]
+margin_top = 170.0
+margin_right = 124.0
+margin_bottom = 222.0
+size_flags_vertical = 3
+custom_colors/font_color_focus = Color( 0, 0.784314, 0, 1 )
+custom_colors/font_color = Color( 0, 0.784314, 0, 1 )
+custom_colors/font_color_hover = Color( 0, 1, 0, 1 )
+custom_colors/font_color_pressed = Color( 0, 1, 0, 1 )
+custom_fonts/font = ExtResource( 13 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 5 )
+text = "Türkçe"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ButtonSounds" parent="LanguagePanel/VBoxContainer/Turkish" instance=ExtResource( 12 )]
+
+[node name="CheckBox" type="CheckBox" parent="LanguagePanel/VBoxContainer/Turkish"]
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
@@ -288,6 +349,7 @@ stretch_mode = 4
 [node name="ButtonSounds" parent="LanguagePanel/CloseButton" instance=ExtResource( 12 )]
 
 [node name="CreditsPanel" type="Panel" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -335,13 +397,18 @@ text = "Fonts
 \"Open Sans\" font by Steve Matteson
 Copyright (c) 2020
 Licensed under the SIL Open Font License, Version 1.1.
-"
+
+\"Noto Sans JP\"
+Copyright (c) 2014-2021
+Licensed under the SIL Open Font License, Version 1.1."
 
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/CreditsButton" to="CreditsPanel" method="_on_CreditsButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/LanguageButton" to="LanguagePanel" method="_on_LanguageButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_ExitButton_pressed"]
 [connection signal="pressed" from="LanguagePanel/VBoxContainer/English" to="LanguagePanel" method="_on_English_pressed"]
+[connection signal="pressed" from="LanguagePanel/VBoxContainer/Japanese" to="LanguagePanel" method="_on_Japanese_pressed"]
 [connection signal="pressed" from="LanguagePanel/VBoxContainer/Russian" to="LanguagePanel" method="_on_Russian_pressed"]
+[connection signal="pressed" from="LanguagePanel/VBoxContainer/Turkish" to="LanguagePanel" method="_on_Turkish_pressed"]
 [connection signal="pressed" from="LanguagePanel/CloseButton" to="LanguagePanel" method="_on_CloseButton_pressed"]
 [connection signal="pressed" from="CreditsPanel/CloseButton" to="CreditsPanel" method="_on_CloseButton_pressed"]

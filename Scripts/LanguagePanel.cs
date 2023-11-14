@@ -4,25 +4,35 @@ using System;
 public class LanguagePanel : Panel
 {
     private GeneralSingleton _generalSingleton;
-    private CheckBox _checkBoxEng;
-    private CheckBox _checkBoxRus;
+    private CheckBox _checkBoxEnglish;
+    private CheckBox _checkBoxJapanese;
+    private CheckBox _checkBoxRussian;
+    private CheckBox _checkBoxTurkish;
 
     public override void _Ready()
     {
         _generalSingleton = GetTree().Root.GetNode<GeneralSingleton>("GeneralSingleton");
-        _checkBoxEng = GetNode<CheckBox>("VBoxContainer/English/CheckBox");
-        _checkBoxRus = GetNode<CheckBox>("VBoxContainer/Russian/CheckBox");
+        _checkBoxEnglish  = GetNode<CheckBox>("VBoxContainer/English/CheckBox");
+        _checkBoxJapanese = GetNode<CheckBox>("VBoxContainer/Japanese/CheckBox");
+        _checkBoxRussian  = GetNode<CheckBox>("VBoxContainer/Russian/CheckBox");
+        _checkBoxTurkish  = GetNode<CheckBox>("VBoxContainer/Turkish/CheckBox");
 
         switch(_generalSingleton.Language)
 		{
-			case LanguageEnum.Eng:
-				_checkBoxEng.Pressed = true;
-                _checkBoxRus.Pressed = false;
+			case LanguageEnum.English:
+				_on_English_pressed();
+				break;
+
+            case LanguageEnum.Japanese:
+				_on_Japanese_pressed();
 				break;
 			
-			case LanguageEnum.Rus:
-				_checkBoxEng.Pressed = false;
-                _checkBoxRus.Pressed = true;
+			case LanguageEnum.Russian:
+				_on_Russian_pressed();
+				break;
+
+            case LanguageEnum.Turkish:
+				_on_Turkish_pressed();
 				break;
 		}
     }
@@ -39,15 +49,36 @@ public class LanguagePanel : Panel
 
     public void _on_English_pressed()
     {
-        _generalSingleton.Language = LanguageEnum.Eng;
-        _checkBoxEng.Pressed = true;
-        _checkBoxRus.Pressed = false;
+        _generalSingleton.Language = LanguageEnum.English;
+        _checkBoxEnglish.Pressed  = true;
+        _checkBoxJapanese.Pressed = false;
+        _checkBoxRussian.Pressed  = false;
+        _checkBoxTurkish.Pressed  = false;
+    }
+
+    public void _on_Japanese_pressed()
+    {
+        _generalSingleton.Language = LanguageEnum.Japanese;
+        _checkBoxEnglish.Pressed  = false;
+        _checkBoxJapanese.Pressed = true;
+        _checkBoxRussian.Pressed  = false;
+        _checkBoxTurkish.Pressed  = false;
     }
 
     public void _on_Russian_pressed()
     {
-        _generalSingleton.Language = LanguageEnum.Rus;
-        _checkBoxEng.Pressed = false;
-        _checkBoxRus.Pressed = true;
+        _generalSingleton.Language = LanguageEnum.Russian;
+        _checkBoxEnglish.Pressed  = false;
+        _checkBoxJapanese.Pressed = false;
+        _checkBoxRussian.Pressed  = true;
+        _checkBoxTurkish.Pressed  = false;
+    }
+    public void _on_Turkish_pressed()
+    {
+        _generalSingleton.Language = LanguageEnum.Turkish;
+        _checkBoxEnglish.Pressed  = false;
+        _checkBoxJapanese.Pressed = false;
+        _checkBoxRussian.Pressed  = false;
+        _checkBoxTurkish.Pressed  = true;
     }
 }

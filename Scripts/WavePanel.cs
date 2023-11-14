@@ -15,12 +15,23 @@ public class WavePanel : Control
 
         switch(_generalSingleton.Language)
 		{
-			case LanguageEnum.Eng:
+			case LanguageEnum.English:
 				_labelText.Text = "Wave: ";
 				break;
+
+            case LanguageEnum.Japanese:
+                DynamicFontData dynamicFontData = GD.Load<DynamicFontData>("res://Fonts/NotoSans/NotoSansJP-Regular.ttf");
+				GeneralSingleton.ChangeFont(_labelText, dynamicFontData);
+
+				_labelText.Text = "ステージ: ";
+				break;
 			
-			case LanguageEnum.Rus:
+			case LanguageEnum.Russian:
 				_labelText.Text = "Волна: ";
+				break;
+            
+            case LanguageEnum.Turkish:
+				_labelText.Text = "Dalga: ";
 				break;
 		}
     }

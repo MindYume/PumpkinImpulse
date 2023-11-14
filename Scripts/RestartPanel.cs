@@ -25,20 +25,47 @@ public class RestartPanel : Panel
 
     private void setLanguage(LanguageEnum language)
     {
+        DynamicFontData dynamicFontData;
         switch(language)
 		{
-			case LanguageEnum.Eng:
+			case LanguageEnum.English:
 				_maxWaveText.Text = "Max wave: ";
                 _completedWavesText.Text = "Completed waves: ";
                 _menuButton.Text = "Menu";
                 _againButton.Text = "Again";
 				break;
+            
+            case LanguageEnum.Japanese:
+                dynamicFontData = GD.Load<DynamicFontData>("res://Fonts/NotoSans/NotoSansJP-Regular.ttf");
+				GeneralSingleton.ChangeFont(_maxWaveText, dynamicFontData);
+                GeneralSingleton.ChangeFont(_completedWavesText, dynamicFontData);
+                GeneralSingleton.ChangeFont(_menuButton, dynamicFontData);
+                GeneralSingleton.ChangeFont(_againButton, dynamicFontData);
+
+				_maxWaveText.Text = "最大ステージ: ";
+                _completedWavesText.Text = "完了したステージ: ";
+                _menuButton.Text = "メニュー";
+                _againButton.Text = "再びプレー";
+				break;
 			
-			case LanguageEnum.Rus:
+			case LanguageEnum.Russian:
 				_maxWaveText.Text = "Максимальная волна: ";
                 _completedWavesText.Text = "Пройденые волны: ";
                 _menuButton.Text = "Меню";
                 _againButton.Text = "Играть снова";
+				break;
+            
+            case LanguageEnum.Turkish:
+                dynamicFontData = GD.Load<DynamicFontData>("res://Fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf");
+                GeneralSingleton.ChangeFont(_maxWaveText, dynamicFontData);
+                GeneralSingleton.ChangeFont(_completedWavesText, dynamicFontData);
+                GeneralSingleton.ChangeFont(_menuButton, dynamicFontData);
+                GeneralSingleton.ChangeFont(_againButton, dynamicFontData);
+
+				_maxWaveText.Text = "Maks. dalga: ";
+                _completedWavesText.Text = "Tamamlanmış dalgalar: ";
+                _menuButton.Text = "Menü";
+                _againButton.Text = "Tekrar";
 				break;
 		}
     }

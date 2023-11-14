@@ -72,6 +72,12 @@ public class EnemySimple : RigidBody2D, IEnemy
         {
             ((Player)body).TakeDamage();
             _generalSingleton.PlaySound("hit", -10, 1.5f);
+            HitEffect.Create(
+				(Node2D)GetParent().GetParent(),
+				(GlobalPosition + ((Node2D)body).GlobalPosition)/2,
+				Vector2.One * 1.75f,
+				new Color("bfffffff")
+			);
             QueueFree();
         }
     }

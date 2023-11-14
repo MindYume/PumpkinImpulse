@@ -27,20 +27,47 @@ public class MainMenu : Panel
 
 	public void _on_language_changed(LanguageEnum languageNew)
 	{
+		DynamicFontData dynamicFontData;
 		switch(languageNew)
 		{
-			case LanguageEnum.Eng:
+			case LanguageEnum.English:
 				_maxWaveText.Text = "Max Wave:";
 				_playButton.Text = "Play";
 				_languageButton.Text = "Language";
 				_exitButton.Text = "Exit";
 				break;
+
+			case LanguageEnum.Japanese:
+				dynamicFontData = GD.Load<DynamicFontData>("res://Fonts/NotoSans/NotoSansJP-Regular.ttf");
+				GeneralSingleton.ChangeFont(_maxWaveText, dynamicFontData);
+				GeneralSingleton.ChangeFont(_playButton, dynamicFontData);
+				GeneralSingleton.ChangeFont(_languageButton, dynamicFontData);
+				GeneralSingleton.ChangeFont(_exitButton, dynamicFontData);
+
+				_maxWaveText.Text = "最大ステージ:";
+				_playButton.Text = "プレー";
+				_languageButton.Text = "言語";
+				_exitButton.Text = "エグジット";
+				break;
 			
-			case LanguageEnum.Rus:
+			case LanguageEnum.Russian:
 				_maxWaveText.Text = "Макс. волна:";
 				_playButton.Text = "Играть";
 				_languageButton.Text = "Язык";
 				_exitButton.Text = "Выход";
+				break;
+			
+			case LanguageEnum.Turkish:
+				dynamicFontData = GD.Load<DynamicFontData>("res://Fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf");
+				GeneralSingleton.ChangeFont(_maxWaveText, dynamicFontData);
+				GeneralSingleton.ChangeFont(_playButton, dynamicFontData);
+				GeneralSingleton.ChangeFont(_languageButton, dynamicFontData);
+				GeneralSingleton.ChangeFont(_exitButton, dynamicFontData);
+
+				_maxWaveText.Text = "Maks. dalga:";
+				_playButton.Text = "Oynamak";
+				_languageButton.Text = "Dil";
+				_exitButton.Text = "Çıkış";
 				break;
 		}
 	}

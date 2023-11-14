@@ -21,20 +21,47 @@ public class PausePanel : Panel
 
     private void setLanguage(LanguageEnum language)
     {
+        DynamicFontData dynamicFontData;
         switch(language)
 		{
-			case LanguageEnum.Eng:
+			case LanguageEnum.English:
 				_label.Text = "Game paused";
                 _playButton.Text = "Continue";
                 _menuButton.Text = "Main menu";
                 _pauseButton.Text = "Pause";
 				break;
+            
+            case LanguageEnum.Japanese:
+                dynamicFontData = GD.Load<DynamicFontData>("res://Fonts/NotoSans/NotoSansJP-Regular.ttf");
+				GeneralSingleton.ChangeFont(_label, dynamicFontData);
+                GeneralSingleton.ChangeFont(_playButton, dynamicFontData);
+                GeneralSingleton.ChangeFont(_menuButton, dynamicFontData);
+                GeneralSingleton.ChangeFont(_pauseButton, dynamicFontData);
+
+				_label.Text = "休止";
+                _playButton.Text = "ゲームを続ける";
+                _menuButton.Text = "メインメニュー";
+                _pauseButton.Text = "一時停止";
+				break;
 			
-			case LanguageEnum.Rus:
+			case LanguageEnum.Russian:
 				_label.Text = "Пауза";
                 _playButton.Text = "Продолжить";
                 _menuButton.Text = "Главное меню";
                 _pauseButton.Text = "Пауза";
+				break;
+            
+            case LanguageEnum.Turkish:
+                dynamicFontData = GD.Load<DynamicFontData>("res://Fonts/OpenSans/OpenSans-VariableFont_wdth,wght.ttf");
+				GeneralSingleton.ChangeFont(_label, dynamicFontData);
+                GeneralSingleton.ChangeFont(_playButton, dynamicFontData);
+                GeneralSingleton.ChangeFont(_menuButton, dynamicFontData);
+                GeneralSingleton.ChangeFont(_pauseButton, dynamicFontData);
+
+				_label.Text = "Duraklat";
+                _playButton.Text = "Devam etmek";
+                _menuButton.Text = "Ana menü";
+                _pauseButton.Text = "Duraklat";
 				break;
 		}
     }
