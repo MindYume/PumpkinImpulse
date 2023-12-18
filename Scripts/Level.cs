@@ -1,3 +1,27 @@
+/*
+MIT License
+
+Copyright (c) 2023 Viktor Grachev
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 using Godot;
 using System;
 
@@ -7,7 +31,6 @@ public class Level : Node2D
     private PackedScene _enemyOrbitPreload = GD.Load<PackedScene>("res://Objects/EnemyOrbit.tscn");
     private PackedScene _enemyGunPreload = GD.Load<PackedScene>("res://Objects/EnemyGun.tscn");
     private PackedScene _enemyWitchPreload = GD.Load<PackedScene>("res://Objects/EnemyWitch.tscn");
-    private GeneralSingleton _generalSingleton;
     private Player _player;
     private int _wave = 1;
     private float _waveScore = 1;
@@ -32,15 +55,14 @@ public class Level : Node2D
 
     public override void _Ready()
     {
-        _generalSingleton = GetTree().Root.GetNode<GeneralSingleton>("GeneralSingleton");
-        _generalSingleton.BulletsContainer = GetNode<Node2D>("BulletsContainer");
+        GeneralSingleton.Instance.BulletsContainer = GetNode<Node2D>("BulletsContainer");
     }
 
     public override void _PhysicsProcess(float delta)
     {
-        if (_player == null && _generalSingleton.PlayerNode != null)
+        if (_player == null && GeneralSingleton.Instance.PlayerNode != null)
         {
-            _player = _generalSingleton.PlayerNode;
+            _player = GeneralSingleton.Instance.PlayerNode;
         }
 
         _NextEnemySpawnTime -= delta;
@@ -87,9 +109,9 @@ public class Level : Node2D
 
         if (_waveScore < _minWaveScore && _enemiesAmount <= 0)
         {
-            if (Wave > _generalSingleton.MaxWave)
+            if (Wave > GeneralSingleton.Instance.MaxWave)
             {
-                _generalSingleton.MaxWave = Wave;
+                GeneralSingleton.Instance.MaxWave = Wave;
             }
             
             Wave += 1;
@@ -98,7 +120,7 @@ public class Level : Node2D
             _isBreakTime = true;
             _NextEnemySpawnTime = 3f;
 
-            _generalSingleton.PlaySound("wave_complete", -20, 1);
+            SoundPlayer.PlaySound("wave_complete", -20, 1);
         }
     }
 

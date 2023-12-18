@@ -1,9 +1,31 @@
+/*
+MIT License
+
+Copyright (c) 2023 Viktor Grachev
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 using Godot;
-using System;
 
 public class MainMenu : Panel
 {
-	private GeneralSingleton _generalSingleton;
 	private Label _maxWaveText;
 	private Label _maxWaveValue;
 	private Button _playButton;
@@ -12,17 +34,16 @@ public class MainMenu : Panel
 
 	public override void _Ready()
 	{
-		_generalSingleton = GetTree().Root.GetNode<GeneralSingleton>("GeneralSingleton");
-		_generalSingleton.Connect("language_changed", this, nameof(_on_language_changed));
+		GeneralSingleton.Instance.OnlanguageChanged += _on_language_changed;
 		_maxWaveText  = GetNode<Label>("MaxWave/Text");
 		_maxWaveValue = GetNode<Label>("MaxWave/Value");
-		_maxWaveValue.Text = $"{_generalSingleton.MaxWave}";
+		_maxWaveValue.Text = $"{GeneralSingleton.Instance.MaxWave}";
 		
 
 		_playButton = GetNode<Button>("VBoxContainer/PlayButton");
 		_languageButton = GetNode<Button>("VBoxContainer/LanguageButton");
 		_exitButton = GetNode<Button>("VBoxContainer/ExitButton");
-		_on_language_changed(_generalSingleton.Language);
+		_on_language_changed(GeneralSingleton.Instance.Language);
 	}
 
 	public void _on_language_changed(LanguageEnum languageNew)
@@ -74,11 +95,17 @@ public class MainMenu : Panel
 
 	public void _on_PlayButton_pressed()
 	{
-		GetTree().ChangeScene("res://Main.tscn");
+		GetTree().ChangeScene("res://Objects/Main.tscn");
 	}
 
 	public void _on_ExitButton_pressed()
 	{
 		GetTree().Quit();
+	}
+
+	public void _on_MainMenu_tree_exiting()
+	{
+		GD.Print("Main menu exit");
+		GeneralSingleton.Instance.OnlanguageChanged -= _on_language_changed;
 	}
 }

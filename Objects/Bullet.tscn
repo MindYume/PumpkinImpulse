@@ -16,7 +16,6 @@ radius = 3.16228
 collision_layer = 8
 collision_mask = 13
 physics_material_override = SubResource( 2 )
-gravity_scale = 0.7
 contacts_reported = 1
 contact_monitor = true
 linear_damp = 0.0

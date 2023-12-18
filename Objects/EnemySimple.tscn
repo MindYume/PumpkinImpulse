@@ -49,14 +49,7 @@ shape = SubResource( 2 )
 [node name="Bat" type="AnimatedSprite" parent="."]
 scale = Vector2( 3, 3 )
 frames = SubResource( 9 )
+frame = 1
 playing = true
-
-[node name="ColorPicker" type="ColorPicker" parent="."]
-visible = false
-margin_left = 4.0
-margin_top = 4.0
-margin_right = 312.0
-margin_bottom = 466.0
-color = Color( 1, 1, 1, 0.74902 )
 
 [connection signal="body_entered" from="." to="." method="_on_EnemySimple_body_entered"]

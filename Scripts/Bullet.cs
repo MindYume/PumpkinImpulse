@@ -1,9 +1,31 @@
+/*
+MIT License
+
+Copyright (c) 2023 Viktor Grachev
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 using Godot;
 
 public class Bullet : RigidBody2D
 {
-	private GeneralSingleton _generalSingleton;
-	private Vector2 _previousPosition;
 	private float _power = 5;
 	private Line2D _trail;
 	private Sprite _circleSprite;
@@ -13,8 +35,6 @@ public class Bullet : RigidBody2D
 
 	public override void _Ready()
 	{
-		_generalSingleton = GetTree().Root.GetNode<GeneralSingleton>("GeneralSingleton");
-		_previousPosition = Position;
 		_trail = GetNode<Line2D>("Line2D");
 		_circleSprite = GetNode<Sprite>("Circle");
 		_circleSprite2 = GetNode<Sprite>("Circle2");
@@ -24,13 +44,10 @@ public class Bullet : RigidBody2D
 	public override void _PhysicsProcess(float delta)
 	{
 		Rotation = 0;
-		if (_previousPosition != Vector2.Zero)
-		{
-			_trail.SetPointPosition(1, (_previousPosition - Position) * 2 * Scale);
-		}
-		_previousPosition = Position;
+		_trail.SetPointPosition(1, -LinearVelocity / 30 * Scale);
 
 		SetPower(_power - delta * 0.2f);
+		
 	}
 
 	public void SetPower(float power)
@@ -77,7 +94,7 @@ public class Bullet : RigidBody2D
 		if (body is IEnemy)
 		{
 			((IEnemy)body).TakeDamage(_power * 100);
-			_generalSingleton.PlaySound("hit", (-40 + _power * 40), 2);
+			SoundPlayer.PlaySound("hit", (-40 + _power * 40), 2);
 			HitEffect.Create(
 				(Node2D)GetParent().GetParent(),
 				(GlobalPosition + ((Node2D)body).GlobalPosition)/2,
@@ -89,7 +106,7 @@ public class Bullet : RigidBody2D
 		else if (body is Player)
 		{
 			((Player)body).TakeDamage();
-			_generalSingleton.PlaySound("hit", (-40 + _power * 40), 2);
+			SoundPlayer.PlaySound("hit", (-40 + _power * 40), 2);
 			HitEffect.Create(
 				(Node2D)GetParent().GetParent(),
 				(GlobalPosition + ((Node2D)body).GlobalPosition)/2,
@@ -97,6 +114,10 @@ public class Bullet : RigidBody2D
 				_trail.DefaultColor
 			);
 			QueueFree();
+		}
+		else if (body is StaticBody2D)
+		{
+			SoundPlayer.PlaySound("hit", (-50 + _power * 30), 1/_power);
 		}
 	}
 }

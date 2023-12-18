@@ -52,9 +52,6 @@ margin_top = 395.0
 margin_bottom = 553.0
 rect_scale = Vector2( 2, 2 )
 alignment = 1
-__meta__ = {
-"_edit_use_anchors_": true
-}
 
 [node name="PlayButton" type="Button" parent="VBoxContainer"]
 margin_right = 160.0
@@ -339,7 +336,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -54.0
 margin_top = 16.0
-margin_right = -17.0
+margin_right = -16.0
 margin_bottom = 54.0
 texture_normal = ExtResource( 3 )
 texture_hover = ExtResource( 10 )
@@ -366,7 +363,7 @@ anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -54.0
 margin_top = 16.0
-margin_right = -17.0
+margin_right = -16.0
 margin_bottom = 54.0
 texture_normal = ExtResource( 3 )
 texture_hover = ExtResource( 10 )
@@ -402,6 +399,7 @@ Licensed under the SIL Open Font License, Version 1.1.
 Copyright (c) 2014-2021
 Licensed under the SIL Open Font License, Version 1.1."
 
+[connection signal="tree_exiting" from="." to="." method="_on_MainMenu_tree_exiting"]
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/CreditsButton" to="CreditsPanel" method="_on_CreditsButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/LanguageButton" to="LanguagePanel" method="_on_LanguageButton_pressed"]

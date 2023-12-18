@@ -108,7 +108,7 @@ playSound = true
 position = Vector2( 4, 1 )
 scale = Vector2( 3, 3 )
 frames = SubResource( 9 )
-frame = 2
+frame = 1
 playing = true
 
 [connection signal="timeout" from="invincibilityTimer" to="." method="_on_invincibilityTimer_timeout"]

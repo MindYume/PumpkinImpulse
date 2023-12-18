@@ -16,7 +16,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-GeneralSingleton="*res://GeneralSingleton.tscn"
+SoundPlayer="*res://Objects/SoundPlayer.tscn"
 
 [display]
 

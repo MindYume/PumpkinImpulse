@@ -1,10 +1,33 @@
+/*
+MIT License
+
+Copyright (c) 2023 Viktor Grachev
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 using Godot;
 using System;
 
 public class Player : RigidBody2D
 {
     private PackedScene _bulletPreload = GD.Load<PackedScene>("res://Objects/Bullet.tscn");
-    private GeneralSingleton _generalSingleton;
     private AnimationPlayer _animationPlayer;
     private AnimatedSprite _animatedSprite;
     private Timer invincibilityTimer;
@@ -18,13 +41,14 @@ public class Player : RigidBody2D
     private bool _isInvinvible = false;
     private float invincibilityDuration = 2;
 
+    public bool IsInvincible => _isInvinvible;
+
     [Signal] public delegate void health_value_changed(int newHealthValue);
     [Signal] public delegate void dead();
 
     public override void _Ready()
     {
-        _generalSingleton = GetTree().Root.GetNode<GeneralSingleton>("GeneralSingleton");
-        _generalSingleton.PlayerNode = this;
+        GeneralSingleton.Instance.PlayerNode = this;
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
         invincibilityTimer = GetNode<Timer>("invincibilityTimer");
@@ -78,13 +102,13 @@ public class Player : RigidBody2D
     private void SpawnBullet(Vector2 position, float direction, float power)
     {
         Bullet bullet = _bulletPreload.Instance<Bullet>();
-        _generalSingleton.BulletsContainer.AddChild(bullet);
+        GeneralSingleton.Instance.BulletsContainer.AddChild(bullet);
         bullet.GlobalPosition = position;
         bullet.LinearVelocity += (new Vector2(Mathf.Sin(direction), -Mathf.Cos(direction))) * power * 450;
         bullet.SetPower(_bulletPower);
 
         Random rand = new Random();
-        _generalSingleton.PlaySound("wave_end", (-10 + _bulletPower * 15), (0.75f / _bulletPower));
+        SoundPlayer.PlaySound("wave_end", (-10 + _bulletPower * 15), (0.75f / _bulletPower));
     }
 
     public void TakeDamage()
@@ -97,7 +121,7 @@ public class Player : RigidBody2D
             if (_health <= 0)
             {
                 EmitSignal(nameof(dead));
-                _generalSingleton.PlaySound("game_over", -10, 1);
+                SoundPlayer.PlaySound("game_over", -10, 1);
             }
 
             _isInvinvible = true;
@@ -108,13 +132,13 @@ public class Player : RigidBody2D
             switch(rand.Next(0,3))
             {
                 case 0:
-                    _generalSingleton.PlaySound("take_damage1", -5, 1.1f);
+                    SoundPlayer.PlaySound("take_damage1", -5, 1.1f);
                     break;
                 case 1:
-                    _generalSingleton.PlaySound("take_damage2", -5, 1.1f);
+                    SoundPlayer.PlaySound("take_damage2", -5, 1.1f);
                     break;
                 case 2:
-                    _generalSingleton.PlaySound("take_damage3", -10, 1.1f);
+                    SoundPlayer.PlaySound("take_damage3", -10, 1.1f);
                     break;
             }
         }
@@ -125,8 +149,6 @@ public class Player : RigidBody2D
         _health++;
         EmitSignal(nameof(health_value_changed), _health);
     }
-
-    public bool IsInvinvible => _isInvinvible;
 
     public void _on_invincibilityTimer_timeout()
     {

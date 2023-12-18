@@ -1,3 +1,27 @@
+/*
+MIT License
+
+Copyright (c) 2023 Viktor Grachev
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 using Godot;
 using System;
 
@@ -5,7 +29,6 @@ public class EnemyWitch : RigidBody2D, IEnemy
 {
 	private PackedScene _firePreload = GD.Load<PackedScene>("res://Objects/Fire.tscn");
 	private PackedScene _bulletPreload = GD.Load<PackedScene>("res://Objects/Bullet.tscn");
-	private GeneralSingleton _generalSingleton;
 	private Player _player;
 	private AnimatedSprite _animatedSprite;
 	private float _health = 200;
@@ -28,24 +51,22 @@ public class EnemyWitch : RigidBody2D, IEnemy
 
 	public override void _Ready()
 	{
-		_generalSingleton = GetTree().Root.GetNode<GeneralSingleton>("GeneralSingleton");
 		_animatedSprite = GetNode<AnimatedSprite>("WitchRed");
 	}
 
 	public override void _PhysicsProcess(float delta)
 	{
 		Rotation = 0;
-		if (_player == null && _generalSingleton.PlayerNode != null)
+		if (_player == null && GeneralSingleton.Instance.PlayerNode != null)
 		{
-			_player = _generalSingleton.PlayerNode;
+			_player = GeneralSingleton.Instance.PlayerNode;
 		}
 		else
 		{
 			if (_isMoving)
 			{
 				Vector2 relativePointPosition = _movePoint - Position;
-				float LinearVelocityAtan2 = Mathf.Atan2(relativePointPosition.y, relativePointPosition.x);
-				LinearVelocity += (new Vector2(Mathf.Cos(LinearVelocityAtan2), Mathf.Sin(LinearVelocityAtan2))) * delta * 500;
+				LinearVelocity += relativePointPosition.Normalized() * delta * 500;
 				LinearVelocity = LinearVelocity.LimitLength(_maxVelocity);
 
 				_nextFireTime += delta;
@@ -55,7 +76,7 @@ public class EnemyWitch : RigidBody2D, IEnemy
 
 					// Spawn fire
 					Fire fire = _firePreload.Instance<Fire>();
-					_generalSingleton.BulletsContainer.AddChild(fire);
+					GeneralSingleton.Instance.BulletsContainer.AddChild(fire);
 					fire.GlobalPosition = Position;
 				}
 
@@ -83,7 +104,7 @@ public class EnemyWitch : RigidBody2D, IEnemy
 
 				// Spawn bullet
 				Bullet bullet = _bulletPreload.Instance<Bullet>();
-				_generalSingleton.BulletsContainer.AddChild(bullet);
+				GeneralSingleton.Instance.BulletsContainer.AddChild(bullet);
 				Vector2 playerDirection = (_player.Position - Position).Normalized();
 				bullet.GlobalPosition = Position;
 				bullet.LinearVelocity += new Vector2(playerDirection.x, playerDirection.y) * 250;
@@ -91,8 +112,8 @@ public class EnemyWitch : RigidBody2D, IEnemy
 				bullet.SetTarget("player");
 				bullet.SetColor(Color.Color8(219, 23, 1), Color.Color8(251, 238, 120), Color.Color8(255, 255, 200));
 
-				_generalSingleton.PlaySound("fire", -15 + (float)rand.NextDouble(), (0.8f + ((float)rand.NextDouble())/2.5f));
-				_generalSingleton.PlaySound("wave_end", -5 + (float)rand.NextDouble(), (0.8f + ((float)rand.NextDouble())/2.5f));
+				SoundPlayer.PlaySound("fire", -15 + (float)rand.NextDouble(), (0.8f + ((float)rand.NextDouble())/2.5f));
+				SoundPlayer.PlaySound("wave_end", -5 + (float)rand.NextDouble(), (0.8f + ((float)rand.NextDouble())/2.5f));
 			}
 
 			if (LinearVelocity.x > 0)

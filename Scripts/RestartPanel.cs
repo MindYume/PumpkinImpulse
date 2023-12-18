@@ -1,9 +1,31 @@
+/*
+MIT License
+
+Copyright (c) 2023 Viktor Grachev
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
 using Godot;
-using System;
 
 public class RestartPanel : Panel
 {
-    private GeneralSingleton _generalSingleton;
     private Label _completedWavesText;
     private Label _completedWavesValue;
     private Label _maxWaveText;
@@ -12,7 +34,6 @@ public class RestartPanel : Panel
     private Button _againButton;
     public override void _Ready()
     {
-        _generalSingleton = GetTree().Root.GetNode<GeneralSingleton>("GeneralSingleton");
         _completedWavesText  = GetNode<Label>("CompletedWaves/Text");
         _completedWavesValue = GetNode<Label>("CompletedWaves/Value");
         _maxWaveText  = GetNode<Label>("MaxWaves/Text");
@@ -20,7 +41,7 @@ public class RestartPanel : Panel
         _menuButton = GetNode<Button>("HBoxContainer/MenuButton");
         _againButton = GetNode<Button>("HBoxContainer/AgainButton");
 
-        setLanguage(_generalSingleton.Language);
+        setLanguage(GeneralSingleton.Instance.Language);
     }
 
     private void setLanguage(LanguageEnum language)
@@ -84,13 +105,13 @@ public class RestartPanel : Panel
     public void _on_AgainButton_pressed()
     {
         GetTree().Paused = false;
-        GetTree().ChangeScene("res://Main.tscn");
+        GetTree().ChangeScene("res://Objects/Main.tscn");
     }
     
 
     public void _on_Player_dead()
     {
-        _maxWaveValue.Text = $"{_generalSingleton.MaxWave}";
+        _maxWaveValue.Text = $"{GeneralSingleton.Instance.MaxWave}";
         Show();
         GetTree().Paused = true;
     }

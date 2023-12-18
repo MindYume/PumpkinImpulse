@@ -24,25 +24,24 @@ SOFTWARE.
 
 using Godot;
 
-public class ButtonSounds : Node
+public class SoundPlayer : Node
 {
+    private static Node _soundPlayerStatic;
+
+    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        Node parent = GetParent();
-        if (parent is Control)
-        {
-            parent.Connect("mouse_entered", this, nameof(_on_mouse_entered));
-            parent.Connect("pressed", this, nameof(_on_pressed));
-        }
+        _soundPlayerStatic = this;
     }
 
-    public void _on_mouse_entered()
+    public static void PlaySound(string soundName, float volumeDb, float pitchScale)
     {
-        SoundPlayer.PlaySound("btn_hover", 0, 1);
-    }
-
-    public void _on_pressed()
-    {
-        SoundPlayer.PlaySound("btn_click", -10, 1);
+        AudioStreamPlayer sound = new AudioStreamPlayer();
+        sound.Stream = GD.Load<AudioStream>($"res://Sounds/{soundName}.wav");
+        _soundPlayerStatic.AddChild(sound);
+        sound.VolumeDb = volumeDb;
+        sound.PitchScale = pitchScale;
+        sound.Connect("finished", sound, "queue_free");
+        sound.Play();
     }
 }
